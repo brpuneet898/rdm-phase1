@@ -1,28 +1,23 @@
 import streamlit as st
 
-# Function to display the form metadata
 def display_metadata(form_name, variables):
     st.success("Here is the metadata for your form:")
     st.write(f"**Name of the Form:** {form_name}")
     for var_name, var_details in variables.items():
-        if isinstance(var_details, dict):  # For variables with ranges
+        if isinstance(var_details, dict):  
             st.write(f"**{var_name}:** Range from {var_details['min']} to {var_details['max']}")
-        else:  # For text variables
+        else:  
             st.write(f"**{var_name}:** {var_details}")
 
-# Main app
 def main():
     st.title("Let's create a personalized form!")
     st.write("Let's start with metadata.")
 
-    # Form name input
     form_name = st.text_input("Name of the Form (100 characters max)", max_chars=100)
 
-    # Initialize session state for variables
     if "variables" not in st.session_state:
         st.session_state.variables = {}
 
-    # Button to add variables
     if form_name:
         st.write("### Add Variables to Your Form")
         variable_options = ["Description", "Age", "Weight", "Height"]
@@ -44,7 +39,6 @@ def main():
                 }
                 st.success(f"{selected_variable} added!")
 
-    # Submit button to display metadata
     if st.button("Submit"):
         if not form_name:
             st.error("Please provide a name for the form.")
